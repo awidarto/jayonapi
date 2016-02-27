@@ -337,10 +337,10 @@ function user_group_id($group)
 	return $row->id;
 }
 
-function get_weight_tariff($weight, $delivery_type ,$app_id = null){
+function get_weight_tariff($weight, $delivery_type ,$app_id = null, $date = null){
 	$CI =& get_instance();
 
-    $weight = (float)$weight;
+    $weight = floatval($weight );
 
 	if($weight > 0){
 		$CI->db->select('total');
@@ -349,6 +349,12 @@ function get_weight_tariff($weight, $delivery_type ,$app_id = null){
         }
 		$CI->db->where('kg_from <= ',$weight);
         $CI->db->where('kg_to >= ',$weight);
+
+        if(!is_null($date)){
+            $CI->db->where('period_from <= ',$date);
+            $CI->db->where('period_to >= ',$date);
+        }
+
         if($delivery_type == 'PS'){
             $result = $CI->db->get($CI->config->item('jayon_pickup_fee_table'));
         }else{
@@ -387,7 +393,7 @@ function get_weight_range($tariff,$app_id = null){
 }
 
 
-function get_cod_tariff($total_price,$app_id = null){
+function get_cod_tariff($total_price,$app_id = null, $date = null){
 	$CI =& get_instance();
 
 	$CI->db->select_max('to_price','max');
@@ -402,6 +408,12 @@ function get_cod_tariff($total_price,$app_id = null){
 		$CI->db->select('surcharge');
 		$CI->db->where('from_price <= ',$total_price);
 		$CI->db->where('to_price >= ',$total_price);
+
+        if(!is_null($date)){
+            $CI->db->where('period_from <= ',$date);
+            $CI->db->where('period_to >= ',$date);
+        }
+
         if(!is_null($app_id)){
             $CI->db->where('app_id',$app_id);
         }

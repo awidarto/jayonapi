@@ -226,7 +226,7 @@ class V2 extends REST_Controller {
                 $order['width'] = (isset($in->width))?$in->width:0;
                 $order['height'] = (isset($in->height))?$in->height:0;
                 $order['length'] = (isset($in->length))?$in->length:0;
-                $order['weight'] = (isset($in->weight))?get_weight_tariff($in->weight, $in->delivery_type ,$app->id):0;
+                $order['weight'] = (isset($in->weight))?get_weight_tariff($in->weight, $in->delivery_type ,$app->id, date('Y-m-d', time() )):0;
                 $order['actual_weight'] = (isset($in->weight))?$in->weight:0;
                 $order['delivery_type'] = (isset($in->delivery_type))?$in->delivery_type:'Delivery Only';
                 $order['delivery_cost'] = (isset($in->delivery_cost))?$in->delivery_cost:0;
