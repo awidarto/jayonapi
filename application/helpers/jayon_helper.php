@@ -374,6 +374,8 @@ function get_weight_tariff($weight, $delivery_type ,$app_id = null, $date = null
 function get_weight_range($tariff,$app_id = null){
     $CI =& get_instance();
 
+    $tariff = floatval($tariff);
+
     if($tariff > 0){
         $CI->db->select('kg_from,kg_to');
         $CI->db->where('total',$tariff);
